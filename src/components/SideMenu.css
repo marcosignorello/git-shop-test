@@ -1,0 +1,164 @@
+.side-menu {
+  padding: 2rem;
+  height: 100%;
+}
+
+.menu-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+  color: #333;
+}
+
+.menu-section {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.menu-section:last-child {
+  border-bottom: none;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Sex Selector */
+.sex-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sex-button {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  background-color: white;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.sex-button:hover {
+  border-color: #667eea;
+  background-color: #f8f9ff;
+}
+
+.sex-button.active {
+  border-color: #667eea;
+  background-color: #667eea;
+  color: white;
+}
+
+/* Design Options */
+.design-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.design-button {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  background-color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.design-button:hover {
+  border-color: #667eea;
+  background-color: #f8f9ff;
+}
+
+.design-button.active {
+  border-color: #667eea;
+  background-color: #667eea;
+  color: white;
+}
+
+.design-icon {
+  font-size: 1.5rem;
+}
+
+.design-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Name Input */
+.name-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Color Options */
+.color-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.color-button {
+  aspect-ratio: 1;
+  border: 3px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.color-button.active {
+  border-color: #333;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.checkmark {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 768px) {
+  .side-menu {
+    padding: 1.5rem;
+  }
+
+  .color-options {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
