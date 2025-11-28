@@ -7,6 +7,17 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* Mobile-first variables */
+  --touch-target-min: 44px; /* Minimum touch target size */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  --border-radius: 12px;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 * {
@@ -15,14 +26,38 @@
   padding: 0;
 }
 
+html {
+  /* Prevent text size adjustment on iOS */
+  -webkit-text-size-adjust: 100%;
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  /* Prevent horizontal scroll on mobile */
+  overflow-x: hidden;
+  /* Better font rendering on mobile */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+/* Improve tap highlight on mobile */
+button, a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  tap-highlight-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Prevent text selection on buttons for better mobile UX */
+button {
+  user-select: none;
+  -webkit-user-select: none;
 }
 

@@ -1,29 +1,42 @@
 .side-menu {
-  padding: 2rem;
+  padding: var(--spacing-md);
   height: 100%;
+  /* Smooth scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent horizontal scroll */
+  overflow-x: hidden;
 }
 
 .menu-title {
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 4vw, 1.5rem);
   font-weight: 700;
-  margin: 0 0 2rem 0;
+  margin: 0 0 var(--spacing-md) 0;
   color: #333;
+  /* Sticky title on mobile for better UX */
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 10;
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 2px solid #f0f0f0;
 }
 
 .menu-section {
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
   border-bottom: 1px solid #e0e0e0;
 }
 
 .menu-section:last-child {
   border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .section-title {
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
   font-weight: 600;
-  margin: 0 0 1rem 0;
+  margin: 0 0 var(--spacing-sm) 0;
   color: #555;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -33,24 +46,37 @@
 .sex-selector {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-xs);
 }
 
 .sex-button {
   flex: 1;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-sm);
   border: 2px solid #e0e0e0;
   background-color: white;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: var(--border-radius);
+  font-size: clamp(0.9375rem, 2.5vw, 1rem);
+  /* Minimum 15px to prevent zoom on iOS */
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   font-weight: 500;
+  /* Minimum touch target size */
+  min-height: var(--touch-target-min);
+  /* Better touch feedback */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  /* Prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .sex-button:hover {
   border-color: #667eea;
   background-color: #f8f9ff;
+}
+
+.sex-button:active {
+  transform: scale(0.98);
 }
 
 .sex-button.active {
@@ -63,25 +89,36 @@
 .design-options {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--spacing-xs);
 }
 
 .design-button {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-sm);
   border: 2px solid #e0e0e0;
   background-color: white;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   text-align: left;
+  /* Minimum touch target */
+  min-height: var(--touch-target-min);
+  /* Better touch feedback */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .design-button:hover {
   border-color: #667eea;
   background-color: #f8f9ff;
+}
+
+.design-button:active {
+  transform: scale(0.98);
 }
 
 .design-button.active {
@@ -91,74 +128,200 @@
 }
 
 .design-icon {
-  font-size: 1.5rem;
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  flex-shrink: 0;
 }
 
 .design-label {
-  font-size: 0.9rem;
+  font-size: clamp(0.875rem, 2.5vw, 0.9rem);
   font-weight: 500;
 }
 
 /* Name Input */
 .name-input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: var(--spacing-md) var(--spacing-sm);
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: var(--border-radius);
+  font-size: clamp(1rem, 2.5vw, 1rem);
+  /* Minimum 16px to prevent zoom on iOS */
   transition: border-color 0.2s;
   box-sizing: border-box;
+  /* Minimum touch target */
+  min-height: var(--touch-target-min);
+  /* Better mobile input experience */
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .name-input:focus {
   outline: none;
   border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.name-input::placeholder {
+  color: #999;
 }
 
 /* Color Options */
 .color-options {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0.75rem;
+  gap: var(--spacing-sm);
 }
 
 .color-button {
   aspect-ratio: 1;
   border: 3px solid transparent;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Minimum touch target */
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  /* Better touch feedback */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .color-button:hover {
   transform: scale(1.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-sm);
+}
+
+.color-button:active {
+  transform: scale(0.95);
 }
 
 .color-button.active {
   border-color: #333;
-  transform: scale(1.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
 }
 
 .checkmark {
   color: white;
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: bold;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+/* Mobile optimizations */
 @media (max-width: 768px) {
   .side-menu {
-    padding: 1.5rem;
+    padding: var(--spacing-sm);
+  }
+
+  .menu-title {
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .menu-section {
+    margin-bottom: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
   }
 
   .color-options {
     grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-xs);
+  }
+
+  .color-button {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .side-menu {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .menu-title {
+    font-size: 1.125rem;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .section-title {
+    font-size: 0.8125rem;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .sex-button,
+  .design-button {
+    padding: var(--spacing-sm);
+    font-size: 0.9375rem;
+  }
+
+  .name-input {
+    padding: var(--spacing-sm);
+    font-size: 1rem;
+  }
+
+  .color-options {
+    gap: var(--spacing-xs);
+  }
+
+  .color-button {
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .side-menu {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .menu-section {
+    margin-bottom: var(--spacing-xs);
+    padding-bottom: var(--spacing-xs);
+  }
+}
+
+/* Tablet and up */
+@media (min-width: 769px) {
+  .side-menu {
+    padding: var(--spacing-lg);
+  }
+
+  .menu-title {
+    position: static;
+    background-color: transparent;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.add-to-cart-button {
+  width: 100%;
+  background-color: #FF6B9D;
+  color: white;
+  border: none;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  margin-top: 1rem;
+}
+
+.add-to-cart-button:hover {
+  background-color: #ff528c;
+  transform: translateY(-2px);
+}
+
+.action-section {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}

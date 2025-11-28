@@ -1,6 +1,6 @@
 import './SideMenu.css'
 
-function SideMenu({ customization, updateCustomization }) {
+function SideMenu({ customization, updateCustomization, onAddToCart }) {
   const designOptions = [
     { value: 'dinosaur', label: 'Small Dinosaurs', icon: '🦕' },
     { value: 'animals', label: 'Animals', icon: '🐾' },
@@ -112,6 +112,12 @@ function SideMenu({ customization, updateCustomization }) {
             </button>
           ))}
         </div>
+      </div>
+
+      <div className="menu-section action-section">
+        <button className="add-to-cart-button" onClick={onAddToCart}>
+          Add to Cart - $29.99
+        </button>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './Canvas.css'
 
 // Helper function to convert hex to RGB
@@ -46,10 +46,66 @@ function getContrastText(backgroundColor) {
 
 function Canvas({ customization }) {
   const canvasRef = useRef(null)
+  const containerRef = useRef(null)
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+
+  // Handle resize
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        setDimensions({
+          width: containerRef.current.clientWidth,
+          height: containerRef.current.clientHeight
+        })
+      }
+    }
+
+    updateDimensions()
+    window.addEventListener('resize', updateDimensions)
+    window.addEventListener('orientationchange', updateDimensions)
+    
+    // Use ResizeObserver for more accurate container size tracking
+    const resizeObserver = new ResizeObserver(updateDimensions)
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current)
+    }
+    
+    return () => {
+      window.removeEventListener('resize', updateDimensions)
+      window.removeEventListener('orientationchange', updateDimensions)
+      resizeObserver.disconnect()
+    }
+  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (!canvas) return
+    const container = containerRef.current
+    if (!canvas || !container || dimensions.width === 0) return
+
+    // Calculate responsive canvas size
+    const containerWidth = dimensions.width || container.clientWidth
+    const containerHeight = dimensions.height || container.clientHeight
+    
+    // Base dimensions (aspect ratio 4:5)
+    const baseWidth = 800
+    const baseHeight = 1000
+    const aspectRatio = baseWidth / baseHeight
+    
+    // Calculate size to fit container while maintaining aspect ratio
+    let canvasWidth = Math.min(baseWidth, containerWidth - 32) // 32px for padding
+    let canvasHeight = canvasWidth / aspectRatio
+    
+    // If height doesn't fit, scale by height instead
+    if (canvasHeight > containerHeight - 32) {
+      canvasHeight = Math.min(baseHeight, containerHeight - 32)
+      canvasWidth = canvasHeight * aspectRatio
+    }
+    
+    // Set canvas size
+    canvas.width = canvasWidth
+    canvas.height = canvasHeight
+    canvas.style.width = `${canvasWidth}px`
+    canvas.style.height = `${canvasHeight}px`
 
     const ctx = canvas.getContext('2d')
     const width = canvas.width
@@ -66,11 +122,12 @@ function Canvas({ customization }) {
     const centerX = width / 2
     const centerY = height / 2
 
-    // Draw circle with selected color
-    const circleRadius = 180
+    // Draw circle with selected color (scale based on canvas size)
+    const scale = Math.min(width / 800, height / 1000)
+    const circleRadius = 180 * scale
     ctx.fillStyle = customization.color
     ctx.strokeStyle = '#333333'
-    ctx.lineWidth = 3
+    ctx.lineWidth = 3 * scale
     
     ctx.beginPath()
     ctx.arc(centerX, centerY, circleRadius, 0, 2 * Math.PI)
@@ -81,7 +138,7 @@ function Canvas({ customization }) {
     if (customization.babyName) {
       const textColor = getContrastText(customization.color)
       ctx.fillStyle = textColor
-      ctx.font = 'bold 48px Arial'
+      ctx.font = `bold ${48 * scale}px Arial`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
       
@@ -90,6 +147,7 @@ function Canvas({ customization }) {
       const words = customization.babyName.split(' ')
       let line = ''
       let y = centerY
+      const lineHeight = 55 * scale
       
       for (let i = 0; i < words.length; i++) {
         const testLine = line + words[i] + ' '
@@ -99,7 +157,7 @@ function Canvas({ customization }) {
         if (testWidth > maxWidth && i > 0) {
           ctx.fillText(line, centerX, y)
           line = words[i] + ' '
-          y += 55
+          y += lineHeight
         } else {
           line = testLine
         }
@@ -114,9 +172,9 @@ function Canvas({ customization }) {
       'neutral': '🎀'
     }
     const sexIcon = sexIcons[customization.sex] || '👶'
-    ctx.font = '60px Arial'
+    ctx.font = `${60 * scale}px Arial`
     ctx.textAlign = 'center'
-    ctx.fillText(sexIcon, centerX, centerY + 120)
+    ctx.fillText(sexIcon, centerX, centerY + 120 * scale)
 
     // Draw design detail if selected
     if (customization.designDetail) {
@@ -127,19 +185,17 @@ function Canvas({ customization }) {
         'dog': '🐶'
       }
       const icon = detailIcons[customization.designDetail] || '✨'
-      ctx.font = '50px Arial'
+      ctx.font = `${50 * scale}px Arial`
       ctx.textAlign = 'center'
-      ctx.fillText(icon, centerX, centerY - 120)
+      ctx.fillText(icon, centerX, centerY - 120 * scale)
     }
 
-  }, [customization])
+  }, [customization, dimensions])
 
   return (
-    <div className="canvas-wrapper">
+    <div className="canvas-wrapper" ref={containerRef}>
       <canvas 
         ref={canvasRef}
-        width={800}
-        height={1000}
         className="preview-canvas"
       />
     </div>

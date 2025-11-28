@@ -4,16 +4,64 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: var(--spacing-sm);
   background-color: #f9f9f9;
+  /* Prevent overflow on mobile */
+  overflow: hidden;
+  position: relative;
 }
 
 .preview-canvas {
   max-width: 100%;
   max-height: 100%;
+  width: auto;
+  height: auto;
   border: 2px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   background-color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
+  /* Better image rendering on mobile */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  /* Prevent canvas from being too large on mobile */
+  object-fit: contain;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .canvas-wrapper {
+    padding: var(--spacing-xs);
+    /* Ensure canvas fits in viewport */
+    min-height: 0;
+  }
+
+  .preview-canvas {
+    /* Scale down on mobile for better fit */
+    max-width: 100%;
+    max-height: 100%;
+    border-width: 1px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .canvas-wrapper {
+    padding: var(--spacing-xs);
+  }
+
+  .preview-canvas {
+    border-radius: calc(var(--border-radius) * 0.75);
+  }
+}
+
+/* Landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .canvas-wrapper {
+    padding: var(--spacing-xs);
+  }
+
+  .preview-canvas {
+    max-height: 90vh;
+  }
 }
 
